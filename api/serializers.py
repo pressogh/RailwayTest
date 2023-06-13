@@ -1,5 +1,3 @@
-from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import transaction
 from rest_framework import serializers
 
@@ -36,17 +34,7 @@ class ReviewNoteSerializer(serializers.ModelSerializer):
         review_note.semester = semester
         review_note.chapter_number = chapter_number
         review_note.chapter = chapter
-        # make temp file
-        temp_file = "temp"
-        review_note.file = InMemoryUploadedFile(
-            ContentFile(temp_file),
-            None,
-            file.name,
-            "text/plain",
-            len(temp_file),
-            "utf-8"
-        )
-
+        review_note.file = file
         review_note.status = "PR"
 
         review_note.save()
