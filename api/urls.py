@@ -1,7 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
-from api.views import TestApiView
+from api import views
 
-urlpatterns = [
-    path('test', TestApiView.as_view()),
-]
+router = routers.DefaultRouter()
+
+router.register(r"review-note", views.ReviewNoteViewSet)
+router_urlpatterns = [path("", include(router.urls))]
+
+urlpatterns = (
+	router_urlpatterns
+)
