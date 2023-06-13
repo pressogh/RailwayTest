@@ -39,6 +39,4 @@ class ReviewNoteSerializer(serializers.ModelSerializer):
 
         review_note.save()
 
-        file.close()
-
         return review_note

@@ -8,6 +8,9 @@ from api.models import ReviewNote
 from api.serializers import ReviewNoteSerializer
 from api.utils.etc import CustomResponse
 
+import base64
+import json
+
 
 class TestApiView(APIView):
 	def get(self, request):
@@ -31,12 +34,10 @@ class ReviewNoteViewSet(viewsets.ModelViewSet):
 		if name is None or grade is None or semester is None or chapter is None or chapter_number is None or file is None:
 			return VALIDATION_ERROR_0001.as_res()
 
-		import base64
 		file = base64.b64decode(file, validate=True)
 
 		# check file is json
 		try:
-			import json
 			temp_file = json.loads(file)
 		except:
 			return REVIEW_NOTE_POST_0001.as_res()
@@ -62,6 +63,7 @@ class ReviewNoteViewSet(viewsets.ModelViewSet):
 		serializer.is_valid(raise_exception=True)
 		serializer.save()
 
+		# delete file
 		file.close()
 
 		response.success = True
