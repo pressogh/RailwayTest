@@ -63,9 +63,6 @@ class ReviewNoteViewSet(viewsets.ModelViewSet):
 		serializer.is_valid(raise_exception=True)
 		serializer.save()
 
-		# delete file
-		file.close()
-
 		response.success = True
 		response.message = "오답노트 생성이 성공적으로 완료되었습니다."
 		response.response = [serializer.data]
