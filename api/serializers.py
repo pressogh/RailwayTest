@@ -3,6 +3,8 @@ from rest_framework import serializers
 
 from api.models import ReviewNote
 
+import random
+
 
 class ReviewNoteSerializer(serializers.ModelSerializer):
     file = serializers.FileField(required=True, write_only=True)
@@ -26,7 +28,7 @@ class ReviewNoteSerializer(serializers.ModelSerializer):
         chapter = self.validated_data.get("chapter", "")
         file = self.validated_data.get("file", "")
 
-        file.name = f"{name}_{grade}_{semester}_{chapter_number}_{chapter}.{file.name.split('.')[-1]}"
+        file.name = f"{name}_{grade}_{semester}_{chapter_number}_{chapter}{random.randint(1, 999999)}.{file.name.split('.')[-1]}"
 
         review_note = ReviewNote()
         review_note.textbook = name
